@@ -488,6 +488,11 @@ void Module::RunSplit(const gate_idx_t *out_gates,
 
   bess::PacketBatch **splits = ctx.splits();
 
+  // phase 0: debug
+  for (int i = 0; i < MAX_GATES + 1; i++) {
+    CHECK_EQ(splits[i], static_cast<bess::PacketBatch *>(nullptr)) << "Splits non null " << i << " " << splits[i];
+  }
+
   // phase 1: collect unique ogates into pending[] and add packets to local
   // batches, using splits to remember the association between an ogate and a
   // local batch
