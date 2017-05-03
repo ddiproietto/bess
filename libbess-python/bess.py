@@ -8,6 +8,7 @@ import struct
 import sys
 import threading
 import time
+import traceback
 
 import service_pb2
 import protobuf_to_dict as pb_conv
@@ -145,7 +146,7 @@ class BESS(object):
         try:
             response = req_fn(request)
         except grpc._channel._Rendezvous as e:
-            raise self.RPCError(str(e))
+            raise self.RPCError(str(e) + " " + traceback.format_exc())
 
         if self.debug:
             print '<---', type(response).__name__

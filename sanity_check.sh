@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 BESSCTL='./bessctl/bessctl'
 SCRIPTS='./bessctl/conf/samples'
