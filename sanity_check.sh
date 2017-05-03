@@ -43,7 +43,7 @@ do
     fail
   fi
   sleep 15
-  $BESSCTL daemon stop
+  $BESSCTL debug enable -- daemon stop
   success=$?
   if [ $success -ne 0 ] 
   then
