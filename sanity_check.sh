@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 BESSCTL='./bessctl/bessctl'
 SCRIPTS='./bessctl/conf/samples'
@@ -35,6 +35,7 @@ rm -f $OUTFILE
 for file in $TESTS
 do
   echo "Running $file..."
+  date
   $BESSCTL daemon start -- run file $SCRIPTS/$file 2>&1 >>$OUTFILE
   success=$?
   if [ $success -ne 0 ] 
