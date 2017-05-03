@@ -170,6 +170,9 @@ class BESS(object):
             response = self._request('KillBess')
         except grpc._channel._Rendezvous:
             pass
+        except Exception as e:
+            print ("The exception " + str(e) + " has been caught.  Reraising it.")
+            raise e
 
         if block:
             while self.is_connected():
