@@ -1609,10 +1609,22 @@ void RunControl() {
   std::thread grpc_server_thread(serve_func);
 
   auto f = exit_requested.get_future();
+
+  LOG(INFO) << "111 Waiting on f";
+
   f.wait();
 
+  LOG(INFO) << "222 Shutting down server";
+
   server->Shutdown();
+
+  LOG(INFO) << "333 joining grpc_server_thread";
+
   grpc_server_thread.join();
 
+  LOG(INFO) << "444 deleting server";
+
   delete server.release();
+
+  LOG(INFO) << "555 returning";
 }
