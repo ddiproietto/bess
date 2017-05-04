@@ -569,7 +569,7 @@ def _do_start(cli, opts):
     if opts is None:
         opts = []
 
-    cmd = 'sudo %s/core/bessd -k %s' % (os.path.dirname(cli.this_dir),
+    cmd = 'sudo GRPC_TRACE=all %s/core/bessd -k %s' % (os.path.dirname(cli.this_dir),
                                         ' '.join(opts))
 
     cli.bess.disconnect()

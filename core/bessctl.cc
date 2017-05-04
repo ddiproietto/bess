@@ -11,6 +11,7 @@
 #include <grpc++/server_builder.h>
 #include <grpc++/server_context.h>
 #include <grpc/grpc.h>
+#include <grpc/support/log.h>
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
@@ -1587,8 +1588,25 @@ class BESSControlImpl final : public BESSControl::Service {
 static std::unique_ptr<Server> server;
 static BESSControlImpl service;
 
+static void bess_grpc_log(gpr_log_func_args *args) {
+  switch (args->severity) {
+    case GPR_LOG_SEVERITY_DEBUG:
+      VLOG(1) << args->message;
+      break;
+    case GPR_LOG_SEVERITY_INFO:
+      LOG(INFO) << args->message;
+      break;
+    case GPR_LOG_SEVERITY_ERROR:
+      LOG(ERROR) << args->message;
+      break;
+  }
+}
+
 void SetupControl() {
   ServerBuilder builder;
+   
+  gpr_set_log_function(bess_grpc_log);
+  gpr_log_verbosity_init();
 
   if (FLAGS_p) {
     std::string server_address = bess::utils::Format("127.0.0.1:%d", FLAGS_p);
