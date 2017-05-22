@@ -41,6 +41,7 @@ before_script:
   - export CC=$VER_CC
 
 script:
+  - ulimit -s
   - ./container_build.py bess
   - ./container_build.py kmod_buildtest
   - (cd core && ./all_test)
